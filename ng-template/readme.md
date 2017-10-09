@@ -1,0 +1,1 @@
+# Angular 4 app template for BigchainDB apps

@@ -1,0 +1,87 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body, material-app, md-sidenav-container, .my-content {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #F9F9F9;
+}
+
+.mat-sidenav-container {
+    background-color: #F9F9F9 !important;
+}
+
+.mat-dialog-container {
+    overflow: visible !important;
+}
+
+.table {
+  padding: 10px;
+}
+.table .second {
+  background-color: transparent;
+}
+.table md-expansion-panel.mat-expanded {
+  background-color: #fff;
+  border: 1px solid #CECECE;
+}
+.table md-expansion-panel:hover {
+  background-color: #fff;
+}
+
+#blockchain {
+    background-color: #fff;
+    border-left: 1px solid #CECECE;
+    width: 300px;
+}
+
+.text-inside-grid {
+    position: absolute;
+    left: 5px;
+}  
+
+.button-inside-grid {
+    text-align: right;
+}  
+
+.clear {
+    clear: both;
+}
+
+.errorholder {
+    position: relative;
+    height: 0;
+    width: 272px;
+}
+
+.errorholder .alert {
+    text-align: center;
+    color: #fff;
+    padding: 13px 15px;
+    font-size: 16px;
+    line-height: 1.33;
+    border-radius: 6px;
+    position: absolute;
+    top: 35px;
+    width: 100%;
+    background-color: #ff7e6d;
+    font-weight: normal;
+    z-index: 999999;
+    box-shadow: 0 11px 15px -7px rgba(0,0,0,.2), 0 24px 38px 3px rgba(0,0,0,.14), 0 9px 46px 8px rgba(0,0,0,.12);
+}
+
+.errorholder .alert:after {
+    position: absolute;
+    display: block;
+    content: "";
+    border-color: transparent transparent #ff7e6d transparent;
+    border-style: solid;
+    border-width: 10px;
+    height: 0;
+    width: 0;
+    position: absolute;
+    top: -19px;
+    left: 136px;
+}

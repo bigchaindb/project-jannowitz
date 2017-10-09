@@ -1,0 +1,16 @@
+{
+    "app": {
+        "id": "",
+        "namespace": "",
+        "types": [
+            {
+                "id": "",
+                "name": "admin",
+                "internalId": 100
+            }
+        ]
+    },
+    "bdb": {
+        "apiUrl": ""
+    }
+}

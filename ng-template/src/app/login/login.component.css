@@ -1,0 +1,18 @@
+#login {
+  position: relative;
+  height: 100%;
+  min-height: 500px;
+}
+
+#login #form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 650px;
+  height: 250px;
+}
+
+#login #form .input{
+  width: 100%;
+}

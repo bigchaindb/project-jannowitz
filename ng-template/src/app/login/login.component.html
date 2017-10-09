@@ -1,0 +1,25 @@
+<div id="login">
+  <div *ngIf="isBusy" class="loader">
+    <md-progress-bar mode="indeterminate"></md-progress-bar>
+  </div>
+
+  <md-card id="form">
+    <md-grid-list cols="5" rowHeight="250px">
+      <md-grid-tile colspan="3" rowspan="1">
+        <div>
+          <div>
+            <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+              <md-form-field class="input" style="width: 300px">
+                <input name="id" ngModel required #first="ngModel" mdInput placeholder="enter your pass phrase" />
+              </md-form-field>
+              <div>
+                <button md-raised-button color="primary">Login</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </md-grid-tile>
+    </md-grid-list>
+  </md-card>
+
+</div>
