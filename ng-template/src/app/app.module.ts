@@ -8,14 +8,14 @@ import { MaterialModule } from './material/material.module'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { ConfigService } from './shared/config.service'
-import { LoginComponent } from './login/login.component'
 import { AuthService } from './shared/auth.service'
-import { BdbService } from './shared/bdb.service'
+import { BdbService } from './shared/bdb.service';
+import { DashboardComponent } from './dashboard/dashboard.component'
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
