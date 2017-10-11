@@ -1,7 +1,7 @@
 {
     "app": {
         "id": "",
-        "namespace": "",
+        "namespace": "bdb.ng-app-template",
         "types": [
             {
                 "id": "",
@@ -11,6 +11,6 @@
         ]
     },
     "bdb": {
-        "apiUrl": ""
+        "apiUrl": "http://13.93.106.123:9984/api/v1/"
     }
 }
