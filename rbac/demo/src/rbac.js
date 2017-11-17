@@ -7,10 +7,12 @@ const conn = new driver.Connection(API_PATH)
 const seedAdmin = bip39.mnemonicToSeed('admin').slice(0, 32)
 const seedUser1 = bip39.mnemonicToSeed('user1').slice(0, 32)
 const seedUser2 = bip39.mnemonicToSeed('user2').slice(0, 32)
+const seedUser3 = bip39.mnemonicToSeed('user3').slice(0, 32)
 
 const admin1 = new driver.Ed25519Keypair(seedAdmin)
 const user1 = new driver.Ed25519Keypair(seedUser1)
 const user2 = new driver.Ed25519Keypair(seedUser2)
+const user3 = new driver.Ed25519Keypair(seedUser3)
 
 const nameSpace = 'rbac-bdb-demo'
 
@@ -57,7 +59,8 @@ export async function createApp() {
     const keyPairs = {
         admin: admin1,
         user1: user1,
-        user2: user2
+        user2: user2,
+        user3: user3
     }
 
     console.log(JSON.stringify(keyPairs))
@@ -145,6 +148,20 @@ export async function createApp() {
     const user2AssetId = (await createUser(admin1, tribe2Id, 'tribe2', user2.publicKey, user2Metadata)).id
     console.log('User2: ' + user2AssetId)
 
+    // create user instances
+    const user3Metadata = {
+        event: 'User Assigned',
+        date: new Date(),
+        timestamp: Date.now(),
+        publicKey: admin1.publicKey,
+        eventData: {
+            userType: 'tribe1'
+        }
+    }
+
+    const user3AssetId = (await createUser(admin1, tribe1Id, 'tribe1', user3.publicKey, user3Metadata)).id
+    console.log('User3: ' + user3AssetId)
+
     // non users
 
     // proposal
@@ -164,6 +181,10 @@ export async function createApp() {
     // create vote by user 2 - should pass
     const vote1 = await createTypeInstance(user2, 'vote', voteGroupId, { name: 'new vote by user 2', timestamp: Date.now() })
     console.log('Vote 1: ' + vote1.id)
+
+    // create proposal by user 3 - should pass
+    const proposal2 = await createTypeInstance(user3, 'proposal', proposalGroupId, { name: 'new proposal by user 3', timestamp: Date.now() })
+    console.log('Proposal 2: ' + proposal2.id)
 
     // create vote by user 1 - should fail
     const vote2 = await createTypeInstance(user1, 'vote', voteGroupId, { name: 'new vote by user 1', timestamp: Date.now() })
