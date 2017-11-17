@@ -1,71 +1,18 @@
 import * as driver from 'bigchaindb-driver'
-import bip39 from 'bip39'
 
-const API_PATH = 'http://bdb-server-1.westeurope.cloudapp.azure.com:49984/api/v1/'
+const API_PATH = 'http://stakemachine1.westeurope.cloudapp.azure.com:49984/api/v1/'
 const conn = new driver.Connection(API_PATH)
 
-const seedAdmin = bip39.mnemonicToSeed('admin').slice(0, 32)
-const seedUser1 = bip39.mnemonicToSeed('user1').slice(0, 32)
-const seedUser2 = bip39.mnemonicToSeed('user2').slice(0, 32)
-const seedUser3 = bip39.mnemonicToSeed('user3').slice(0, 32)
-
-const admin1 = new driver.Ed25519Keypair(seedAdmin)
-const user1 = new driver.Ed25519Keypair(seedUser1)
-const user2 = new driver.Ed25519Keypair(seedUser2)
-const user3 = new driver.Ed25519Keypair(seedUser3)
+const admin1 = new driver.Ed25519Keypair()
+const user1 = new driver.Ed25519Keypair()
+const user2 = new driver.Ed25519Keypair()
+const user3 = new driver.Ed25519Keypair()
 
 const nameSpace = 'rbac-bdb-demo'
 
-const config = {
-    "app": {
-        "id": "",
-        "namespace": nameSpace,
-        "types": [
-            {
-                "id": "",
-                "name": "admin",
-                "internalId": 100
-            },
-            {
-                "id": "",
-                "name": "tribe1",
-                "internalId": 101
-            },
-            {
-                "id": "",
-                "name": "tribe2",
-                "internalId": 102
-            },
-            {
-                "id": "",
-                "name": "proposal",
-                "internalId": 201
-            },
-            {
-                "id": "",
-                "name": "vote",
-                "internalId": 202
-            }
-        ]
-    },
-    "bdb": {
-        "apiUrl": API_PATH
-    }
-}
-
 export async function createApp() {
 
-    // create bootstrap keypairs
-    const keyPairs = {
-        admin: admin1,
-        user1: user1,
-        user2: user2,
-        user3: user3
-    }
-
-    console.log(JSON.stringify(keyPairs))
-
-    // create admin user type
+    // create admin user type - this is the asset representing the group of admins
     const adminGroupAsset = {
         ns: `${nameSpace}.admin`,
         name: 'admin'
@@ -77,9 +24,8 @@ export async function createApp() {
 
     const adminGroupId = (await createNewAsset(admin1, adminGroupAsset, adminGroupMetadata)).id
     console.log('AdminGroup: ' + adminGroupId)
-    config.app.types[0].id = adminGroupId
 
-    // create admin user instance
+    // create admin user instance - this is a single user with admin role represented by an asset
     const adminUserMetadata = {
         event: 'User Assigned',
         date: new Date(),
@@ -93,7 +39,7 @@ export async function createApp() {
     const adminUserId = (await createUser(admin1, adminGroupId, 'admin', admin1.publicKey, adminUserMetadata)).id
     console.log('AdminUser1: ' + adminUserId)
 
-    // create app
+    // create app - the umbrella asset for representing the app
     const appAsset = {
         ns: nameSpace,
         name: nameSpace
@@ -105,20 +51,17 @@ export async function createApp() {
 
     const appId = (await createNewAsset(admin1, appAsset, appMetadata)).id
     console.log('App: ' + appId)
-    config.app.id = appId
 
     // create types
 
     // user types
 
-    // tribes
+    // tribes - user groups
     const tribe1Id = (await createType('tribe1', appId, adminGroupId)).id
     console.log('Tribe 1: ' + tribe1Id)
-    config.app.types[1].id = tribe1Id
 
     const tribe2Id = (await createType('tribe2', appId, adminGroupId)).id
     console.log('Tribe 2: ' + tribe2Id)
-    config.app.types[2].id = tribe2Id
 
     // create user instances
     const userMetadata = {
@@ -131,6 +74,7 @@ export async function createApp() {
         }
     }
 
+    // user 1 added to tribe 1
     const userAssetId = (await createUser(admin1, tribe1Id, 'tribe1', user1.publicKey, userMetadata)).id
     console.log('User1: ' + userAssetId)
 
@@ -145,6 +89,7 @@ export async function createApp() {
         }
     }
 
+    // user 2 added to tribe 2
     const user2AssetId = (await createUser(admin1, tribe2Id, 'tribe2', user2.publicKey, user2Metadata)).id
     console.log('User2: ' + user2AssetId)
 
@@ -159,20 +104,21 @@ export async function createApp() {
         }
     }
 
+    // user 3 added to tribe 1
     const user3AssetId = (await createUser(admin1, tribe1Id, 'tribe1', user3.publicKey, user3Metadata)).id
     console.log('User3: ' + user3AssetId)
 
     // non users
 
-    // proposal
+    // proposal - only tribe 1 users can create proposal
     const proposalGroupId = (await createType('proposal', appId, tribe1Id)).id
     console.log('ProposalGroup: ' + proposalGroupId)
-    config.app.types[3].id = proposalGroupId
 
-    // vote
+    // vote - only tribe 2 users can create vote
     const voteGroupId = (await createType('vote', appId, tribe2Id)).id
     console.log('VoteGroup: ' + voteGroupId)
-    config.app.types[4].id = voteGroupId
+
+    // Test cases
 
     // create proposal by user 1 - should pass
     const proposal1 = await createTypeInstance(user1, 'proposal', proposalGroupId, { name: 'new proposal by user 1', timestamp: Date.now() })
