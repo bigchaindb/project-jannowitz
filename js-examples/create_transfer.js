@@ -14,17 +14,17 @@ const conn = new BigchainDB.Connection(API_PATH, {
 
 
 // copy to file
-const counterparty = new BigchainDB.Ed25519Keypair(bip39.mnemonicToSeed('seedPhrase').slice(0, 32))
+const enemy = new BigchainDB.Ed25519Keypair(bip39.mnemonicToSeed('seedPhrase').slice(0, 32))
 
 createAssets()
 
 async function createAssets() {
-    const counterPartyAsset = await createCounterParty(counterparty)
+    const enemyAsset = await createEnemy(enemy)
     // Transfer transaction
-    console.log('CounterParty created', counterPartyAsset)
-    const groupAsset = await createGroup(counterparty)
+    console.log('Enemy created', enemyAsset)
+    const groupAsset = await createGroup(enemy)
     console.log('Group asset created', groupAsset)
-    const updatedGroup = await updateGroup(counterparty, groupAsset)
+    const updatedGroup = await updateGroup(enemy, groupAsset)
     console.log('Group updated', updatedGroup)
 
     // Test exported functions
@@ -34,45 +34,45 @@ async function createAssets() {
     const metadata = {
         meta: 'simple_example'
     }
-    const createSimpl = await createSimpleAsset(counterparty, asset, metadata)
+    const createSimpl = await createSimpleAsset(enemy, asset, metadata)
     const searchById = await searchAsset('random_name')
-    const appendSimp = await appendTransaction(counterparty, groupAsset.id, metadata)
+    const appendSimp = await appendTransaction(enemy, groupAsset.id, metadata)
     const searchSimpl = await getAssetById(groupAsset.id)
 }
 
 
-async function createCounterParty(keypair) {
+async function createEnemy(keypair) {
 
-    const txCreateCounterParty = BigchainDB.Transaction.makeCreateTransaction(
+    const txCreateEnemy = BigchainDB.Transaction.makeCreateTransaction(
         // Define the asset to store, in this example it is the current temperature
         // (in Celsius) for the city of Berlin.
         {
-            'entity': 'COUNTERPARTY',
-            'type': 'BRK'
+            'entity': 'ENEMY',
+            'type': 'SRT'
         },
         {
-            'entity': 'COUNTERPARTY',
+            'entity': 'ENEMY',
             'CPShortName': 'SDFWR',
             'Type': 'XSSD',
         },
-        // counterparty is the owner
+        // enemy is the owner
         [BigchainDB.Transaction.makeOutput(
             BigchainDB.Transaction.makeEd25519Condition(keypair.publicKey))],
         keypair.publicKey
     )
 
     // Sign the transaction with private keys
-    const txSigned = BigchainDB.Transaction.signTransaction(txCreateCounterParty, keypair.privateKey)
+    const txSigned = BigchainDB.Transaction.signTransaction(txCreateEnemy, keypair.privateKey)
 
     return conn.postTransaction(txSigned)
         .then(() => conn.pollStatusAndFetchTransaction(txSigned.id))
         .then(res => {
-            console.log('createCounterParty function finished. ', txSigned.id, 'accepted')
+            console.log('createEnemy function finished. ', txSigned.id, 'accepted')
             return res
         })
 }
 
-async function createGroup(keypair, counterpartyId) {
+async function createGroup(keypair, enemyId) {
 
     const txCreateGroup = BigchainDB.Transaction.makeCreateTransaction(
         // Define the asset to store, in this example it is the current temperature
@@ -88,7 +88,7 @@ async function createGroup(keypair, counterpartyId) {
             'assettype': 'SW',
             'authorizedaction': 'READ'
         },
-        // counterparty is the owner
+        // enemy is the owner
         [BigchainDB.Transaction.makeOutput(
             BigchainDB.Transaction.makeEd25519Condition(keypair.publicKey))],
         keypair.publicKey
@@ -138,7 +138,7 @@ async function createSimpleAsset(keypair, asset, metadata){
         // (in Celsius) for the city of Berlin.
         asset,
         metadata,
-        // counterparty is the owner
+        // ENEMY is the owner
         [BigchainDB.Transaction.makeOutput(
             BigchainDB.Transaction.makeEd25519Condition(keypair.publicKey))],
         keypair.publicKey
