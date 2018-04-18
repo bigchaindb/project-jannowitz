@@ -20,7 +20,7 @@ const conn = new BigchainDB.Connection(API_PATH, {
 
 
 
-const longAsset = 'testexapme'.repeat(10000)
+const longAsset = 'testexapme'.repeat(400)
 
 
 
