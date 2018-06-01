@@ -1,6 +1,6 @@
 import * as driver from 'bigchaindb-driver'
 
-const API_PATH = 'http://localhost:9984/api/v1/'
+const API_PATH = 'http://localhost:9984/api/v1/'  //the other url was not working
 const conn = new driver.Connection(API_PATH)
 
 const admin1 = new driver.Ed25519Keypair()
@@ -10,7 +10,7 @@ const user3 = new driver.Ed25519Keypair()
 
 const nameSpace = 'rbac-bdb-demo'
 
-createApp()
+createApp()   //calling here just to test
 
 export async function createApp() {
 
