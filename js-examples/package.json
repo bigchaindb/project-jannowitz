@@ -10,6 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "bigchaindb-driver": "^4.0.1",
-    "bip39": "^2.5.0"
+    "bip39": "^2.5.0",
+    "node-schedule": "^1.3.0",
+    "object-sizeof": "^1.2.0"
   }
 }

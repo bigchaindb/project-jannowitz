@@ -25,7 +25,7 @@ const condition3 = BigchainDB.Transaction.makeEd25519Condition(user3.publicKey, 
 
 const thresholdCondition = BigchainDB.Transaction.makeThresholdCondition(threshold, [condition1, condition2, condition3])
 
-console.log(thresholdCondition)
+console.log('thresholdCondition', thresholdCondition)
 let output = BigchainDB.Transaction.makeOutput(thresholdCondition);
 output.public_keys = [user1.publicKey, user2.publicKey, user3.publicKey];
 
