@@ -22,7 +22,7 @@ bdb = BigchainDB(bdb_root_url)
 car_asset = {
     'data': {
         'car': 
-            'serial_number',
+            'serial_number3',
     },
 }
 
@@ -48,24 +48,17 @@ tx_signed1 = bdb.transactions.fulfill(
 
 print("TXid create: ", tx_signed1)
 
+
+# Commit mode by default
 sent_creation_tx = bdb.transactions.send(tx_signed1)
 
 
 txid = tx_signed1['id']
 
 
-trials = 0
-while trials < 60:
-    try:
-        if bdb.transactions.status(txid).get('status') == 'valid' :
-            print('Tx Create valid in:', trials, 'secs')
-            break
-    except bigchaindb_driver.exceptions.NotFoundError:
-        trials += 1
-        sleep(1)
-
-if trials == 60:
-    print('Tx is still being processed... Bye!')
-    exit(0)
+print('Tx posted.')
 
 
+searchResult = bdb.assets.get(search='serial_number')
+
+print('searchResult', searchResult)
