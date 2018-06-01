@@ -6,6 +6,6 @@ import * as transUtils from './rbac'
             await transUtils.createApp()
         } catch (ex) {
             // TODO - handle error
-        }       
+        }
     }
-)()
+)
