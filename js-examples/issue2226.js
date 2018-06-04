@@ -18,8 +18,12 @@ const conn = new BigchainDB.Connection(API_PATH, {
 
 
 
+
 const user = new BigchainDB.Ed25519Keypair(bip39.mnemonicToSeed('seedPhrase').slice(0, 32))
 
+
+console.log('user', user);
+console.log('conn', conn)
 
 // Execute ever x seconds: '*/15 * * * * *'
 let count = 0
@@ -64,14 +68,14 @@ function sendToBigchainDB(asset, keypair, count, nTx) {
             BigchainDB.Transaction.makeEd25519Condition(keypair.publicKey))],
         keypair.publicKey
     )
+
     // Sign the transaction with private keys
     const txSigned = BigchainDB.Transaction.signTransaction(txSimpleAsset, keypair.privateKey)
- 
+
     // console.log(txSigned.id)
     // console.log(sizeof(txSigned))
     //console.log(JSON.stringify(txSigned))
 
-    conn.postTransaction(txSigned)
+    conn.postTransactionCommit(txSigned)
+
 }
-
-

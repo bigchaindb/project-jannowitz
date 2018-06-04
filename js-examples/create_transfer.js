@@ -37,7 +37,7 @@ async function createAssets() {
         meta: 'simple_example'
     }
     const createSimpl = await createSimpleAsset(enemy, asset, metadata)
-    console.log('Simple asset created', createSimpl)
+
     const searchById = await searchAsset('random_name')
     const appendSimp = await appendTransaction(enemy, groupAsset.id, metadata)
     const searchSimpl = await getAssetById(groupAsset.id)
@@ -49,7 +49,7 @@ async function createEnemy(keypair) {
         // Define the asset to store, in this example it is the current temperature
         // (in Celsius) for the city of Berlin.
         {
-            'entity': '2SWayseikgggsdde2',
+            'entity': '!zgnkn',
             'type': 'SRT'
         },
         {
@@ -80,7 +80,7 @@ async function createGroup(keypair, enemyId) {
         // Define the asset to store, in this example it is the current temperature
         // (in Celsius) for the city of Berlin.
         {
-            'entity': '2SeWyGED5',
+            'entity': 'euFg',
             'assettype': 'SW',
             'authorizedaction': 'READ',
 
@@ -115,7 +115,7 @@ async function updateGroup(keypair, groupAsset) {
           [BigchainDB.Transaction.makeOutput(
             BigchainDB.Transaction.makeEd25519Condition(keypair.publicKey))],
             {
-                'entity': '2SeWy35',
+                'entity': 'ÜujRt',
                 'assettype': 'ASSSQ',
                 'authorizedaction': 'REWAD'
             }
@@ -133,12 +133,12 @@ async function updateGroup(keypair, groupAsset) {
 }
 
 async function createSimpleAsset(keypair, asset, metadata){
-    console.log('hello create simple asset');
+
     const txSimpleAsset = BigchainDB.Transaction.makeCreateTransaction(
         // Define the asset to store, in this example it is the current temperature
         // (in Celsius) for the city of Berlin.
         asset,
-        {'entity':'metaDatA'},
+        {'entity':'metaDatAS'},
         // ENEMY is the owner
         [BigchainDB.Transaction.makeOutput(
             BigchainDB.Transaction.makeEd25519Condition(keypair.publicKey))],
@@ -150,7 +150,7 @@ async function createSimpleAsset(keypair, asset, metadata){
     const txSigned = BigchainDB.Transaction.signTransaction(txSimpleAsset, keypair.privateKey)
 
     return conn.postTransactionCommit(txSigned)
-        // .then(() => conn.pollStatusAndFetchTransaction(txSigned.id))
+
         .then(res => {
             console.log('Created simple asset', txSigned.id, 'accepted')
             return res
@@ -199,7 +199,7 @@ async function appendTransaction(keypair, assetId, metadata){
                 [BigchainDB.Transaction.makeOutput(
                     BigchainDB.Transaction.makeEd25519Condition(keypair.publicKey))],
                     {
-                      'entity': '2s53',
+                      'entity': '$56z',
                       'assettype': 'ASSSQ',
                       'authorizedaction': 'REWAD'
                     }

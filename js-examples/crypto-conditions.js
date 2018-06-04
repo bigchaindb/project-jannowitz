@@ -25,7 +25,6 @@ const condition3 = BigchainDB.Transaction.makeEd25519Condition(user3.publicKey, 
 
 const thresholdCondition = BigchainDB.Transaction.makeThresholdCondition(threshold, [condition1, condition2, condition3])
 
-console.log('thresholdCondition', thresholdCondition)
 let output = BigchainDB.Transaction.makeOutput(thresholdCondition);
 output.public_keys = [user1.publicKey, user2.publicKey, user3.publicKey];
 
@@ -63,7 +62,7 @@ conn.postTransactionCommit(txSigned)
               what: "Transfer transaction"
           }
         );
-
+          
                     let fulfillment1 = BigchainDB.Transaction.makeEd25519Condition(user1.publicKey, false)
                     let fulfillment2 = BigchainDB.Transaction.makeEd25519Condition(user2.publicKey, false)
                     let fulfillment3 = BigchainDB.Transaction.makeEd25519Condition(user3.publicKey, false)
