@@ -1,7 +1,7 @@
 const BigchainDB = require('bigchaindb-driver')
 const schedule = require('node-schedule')
 const bip39 = require('bip39')
-var sizeof = require('object-sizeof');
+const sizeof = require('object-sizeof');
 
 const API_PATH = 'http://localhost:9984/api/v1/'
 
@@ -59,12 +59,10 @@ function sendToBigchainDB(asset, keypair, count, nTx) {
     )
     // Sign the transaction with private keys
     const txSigned = BigchainDB.Transaction.signTransaction(txSimpleAsset, keypair.privateKey)
- 
+
     // console.log(txSigned.id)
     // console.log(sizeof(txSigned))
     //console.log(JSON.stringify(txSigned))
 
     conn.postTransaction(txSigned)
 }
-
-

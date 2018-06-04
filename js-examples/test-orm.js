@@ -11,6 +11,8 @@ const bdbOrm = new Orm(
       app_key: ''
     }
 );
+
+
 //asd
 bdbOrm.define("crabModel", "https://schema.org/v1/crab")
 // define(<model name>,<additional information>)
@@ -23,14 +25,13 @@ const aliceKeypair = new driver.Ed25519Keypair()
 
 // CREATE ASSET
 // from the defined models in our bdbOrm we create an asset with Alice as owner
-bdbOrm.classic_car_asset
-    .create({
-        keypair: aliceKeypair,
-        data: { serial_code: 'n0tp01ntAt0p01ntB',
-                manufacturer: 'classik',
-                transmission: 'manual',
-                drivetrain: 'RWD' }
-    })
+bdbOrm.models.classic_car_asset.create({
+      keypair: aliceKeypair,
+      data: { serial_code: 'n0tp01ntAt0p01ntB',
+              manufacturer: 'classik',
+              transmission: 'manual',
+              drivetrain: 'RWD' }
+  })
     .then(asset => {
         /*
             asset is an object with all our data and functions
@@ -46,7 +47,7 @@ bdbOrm.classic_car_asset
 
 // APPEND A TRANSACTION
 // create an asset with Alice as owner
-bdbOrm.classic_car_asset
+bdbOrm.models.classic_car_asset
 .create({
     keypair: aliceKeypair,
     data: { key: 'dataValue' }

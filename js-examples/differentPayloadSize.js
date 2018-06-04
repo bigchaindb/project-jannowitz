@@ -15,7 +15,7 @@ const API_PATH = 'http://localhost:9984/api/v1/'
 // const API_PATH = 'http://localhost:32780/api/v1/'
 const conn = new BigchainDB.Connection(API_PATH, {
      app_id: '',
-    app_key: ''
+     app_key: ''
 })
 
 
@@ -49,9 +49,9 @@ async function sendToBigchainDB(asset, keypair) {
     )
     // Sign the transaction with private keys
     const txSigned = BigchainDB.Transaction.signTransaction(txSimpleAsset, keypair.privateKey)
- 
-    console.log(txSigned.id)
-    console.log(sizeof(txSigned))
+
+    console.log('txSigned ', txSigned.id)
+    console.log('sizeof ', sizeof(txSigned))
     //console.log(JSON.stringify(txSigned))
 
     conn.postTransaction(txSigned)

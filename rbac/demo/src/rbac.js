@@ -1,6 +1,6 @@
 import * as driver from 'bigchaindb-driver'
 
-const API_PATH = 'http://stakemachine1.westeurope.cloudapp.azure.com:49984/api/v1/'
+const API_PATH = 'http://localhost:9984/api/v1/'  //the other url was not working
 const conn = new driver.Connection(API_PATH)
 
 const admin1 = new driver.Ed25519Keypair()
@@ -9,6 +9,8 @@ const user2 = new driver.Ed25519Keypair()
 const user3 = new driver.Ed25519Keypair()
 
 const nameSpace = 'rbac-bdb-demo'
+
+createApp()   //calling here just to test
 
 export async function createApp() {
 
@@ -208,14 +210,15 @@ async function createNewAsset(keypair, asset, metadata) {
     const transaction = driver.Transaction.makeCreateTransaction(
         asset,
         metadata,
-        [output],
+        [ driver.Transaction.makeOutput(
+               driver.Transaction.makeEd25519Condition(keypair.publicKey))
+       ],
         keypair.publicKey
     )
 
     const txSigned = driver.Transaction.signTransaction(transaction, keypair.privateKey)
     let tx
-    await conn.postTransaction(txSigned)
-        .then(() => conn.pollStatusAndFetchTransaction(txSigned.id))
+    await conn.postTransactionCommit(txSigned)
         .then(retrievedTx => {
             tx = retrievedTx
         })
@@ -231,16 +234,15 @@ async function transferAsset(tx, fromKeyPair, toPublicKey, metadata) {
     output.public_keys = [toPublicKey]
 
     const txTransfer = driver.Transaction.makeTransferTransaction(
-        tx,
-        metadata,
+        [{tx: tx,output_index:0}],
         [output],
-        0
+        metadata
     )
 
     const txSigned = driver.Transaction.signTransaction(txTransfer, fromKeyPair.privateKey)
     let trTx
     await conn.postTransaction(txSigned)
-        .then(() => conn.pollStatusAndFetchTransaction(txSigned.id))
+        // .then(() => conn.pollStatusAndFetchTransaction(txSigned.id))
         .then(retrievedTx => {
             trTx = retrievedTx
         })
