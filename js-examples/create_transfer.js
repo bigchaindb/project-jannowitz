@@ -49,7 +49,7 @@ async function createEnemy(keypair) {
         // Define the asset to store, in this example it is the current temperature
         // (in Celsius) for the city of Berlin.
         {
-            'entity': '!zgnkn',
+            'entity': '!z%gnkn',
             'type': 'SRT'
         },
         {
