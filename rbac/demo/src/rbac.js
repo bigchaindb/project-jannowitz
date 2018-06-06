@@ -10,7 +10,7 @@ const user3 = new driver.Ed25519Keypair()
 
 const nameSpace = 'rbac-bdb-demo'
 
-createApp()   //calling here just to test
+
 
 export async function createApp() {
 
