@@ -84,7 +84,7 @@ async function transfer(txSigned) {
     const transactionUniqueFulfillment2 = createTranfer.inputs[0].fulfills ? serializedTransaction
                 .concat(createTranfer.inputs[0].fulfills.transaction_id)
                 .concat(createTranfer.inputs[0].fulfills.output_index) : serializedTransaction
-    const transactionHash2 = sha256Hash(transactionUniqueFulfillment1)
+    const transactionHash2 = sha256Hash(transactionUniqueFulfillment2)
     fulfillment2.sign(Buffer.from(transactionHash2, 'hex'), new Buffer.from(base58.decode(user2.privateKey)))
 
     // 2 out of 3 need to sign the fulfillment. Still condition3 is needed as the "circuit definition" is needed.
