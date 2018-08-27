@@ -145,8 +145,7 @@ export class BdbService {
 
     const txSigned = driver.Transaction.signTransaction(transaction, keypair.privateKey)
     let tx
-    await this.conn.postTransaction(txSigned)
-      .then(() => this.conn.pollStatusAndFetchTransaction(txSigned.id))
+    await this.conn.postTransactionCommit(txSigned)
       .then(retrievedTx => {
         tx = retrievedTx
         console.log('Asset Created: ' + retrievedTx.id);
@@ -165,16 +164,14 @@ export class BdbService {
     output.public_keys = [toPublicKey]
 
     const txTransfer = driver.Transaction.makeTransferTransaction(
-      tx,
-      metadata,
-      [output],
-      0
+      [{ tx , output_index: 0 }],
+       [output],
+        metadata
     )
 
     const txSigned = driver.Transaction.signTransaction(txTransfer, fromKeyPair.privateKey)
     let trTx
-    await this.conn.postTransaction(txSigned)
-      .then(() => this.conn.pollStatusAndFetchTransaction(txSigned.id))
+    await this.conn.postTransactionCommit(txSigned)
       .then(retrievedTx => {
         trTx = retrievedTx
         console.log('Asset Transferred: ' + retrievedTx.id);
