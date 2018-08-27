@@ -11,7 +11,6 @@ const user3 = new driver.Ed25519Keypair()
 const nameSpace = 'rbac-bdb-demo'
 
 
-
 export async function createApp() {
 
     // create admin user type - this is the asset representing the group of admins

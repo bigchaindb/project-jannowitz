@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "babel-preset-env": "^1.6.0",
-    "bigchaindb-driver": "^0.3.0"
+    "bigchaindb-driver": "^4.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
