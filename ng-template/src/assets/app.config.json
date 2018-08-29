@@ -11,6 +11,6 @@
         ]
     },
     "bdb": {
-        "apiUrl": "http://13.93.106.123:9984/api/v1/"
+        "apiUrl": "http://localhost:9984/api/v1/"
     }
 }
