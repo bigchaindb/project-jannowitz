@@ -1,23 +1,28 @@
-# Create image based on the official Node 6 image from dockerhub
-FROM node:8
+# get host image
+FROM ubuntu:18.04
 
-# Create a directory where our app will be placed
-RUN mkdir -p /usr/src/app
+# install nginx
+RUN apt-get update
+RUN apt-get install -y curl build-essential nginx
 
-# Change directory so that our commands run inside this new directory
-WORKDIR /usr/src/app
+# install node
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash
+RUN apt-get install -y nodejs
 
-# Copy dependency definitions
-COPY package.json /usr/src/app
+# switch to workdir
+WORKDIR /app
 
-# Install dependecies
+# copy project files
+COPY . .
+
+# install npm packages
 RUN npm install
 
-# Get all the code needed to run the app
-COPY . /usr/src/app
+# build package
+RUN npm run build
 
-# Expose the port the app runs in
-EXPOSE 4200
+# setup nginx config
+ADD ./nginx.conf /etc/nginx/nginx.conf
 
-# Serve the app
-CMD ["npm", "start"]
+# run nginx
+CMD ["nginx", "-g", "daemon off;"]

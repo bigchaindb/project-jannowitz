@@ -1,8 +1,8 @@
-# Angular 4 app template for BigchainDB apps
+# Angular 6 app template for BigchainDB apps
 
 ![screen-shot](https://github.com/ascribe/project-jannowitz/blob/master/ng-template/Screen%20Shot.png)
 
-This is a simple angular app demonstrating how we structure BigchainDB client apps using Angular 4.
+This is a simple angular app demonstrating how we structure BigchainDB client apps using Angular 6.
 
 ## Structure
 The app has the following structure within the default Angular app structure,
@@ -32,5 +32,3 @@ After this, the business services can be built on top of the app and type assets
 ## Deployment
 
 There is sample docker file in the root which can be referred for docker deployment of the app.
-
-

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BdbService } from '../shared/bdb.service'
-import { Asset } from '../models/asset.model'
-import { Metadata } from '../models/metadata.model'
+import { BdbService } from '../shared/bdb.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,20 +10,16 @@ export class DashboardComponent implements OnInit {
 
   constructor(private bdbService: BdbService) { }
 
-  public txIds: string[]
-  private keypair
+  public tx;
+  public keypair;
 
   ngOnInit() {
-    this.txIds = []
-    this.keypair = this.bdbService.getKeypairFromSeed('demo')
+    this.keypair = this.bdbService.getKeypair();
   }
 
-  public createTransaction() {
-    console.log('123')
-    const asset = new Asset()
-    asset.ns = 'ng-template-demo'
-    const metadata = new Metadata()
-    metadata.event = 'ng-template-demo-asset-create'
-    this.bdbService.createNewAsset(this.keypair, asset, metadata).then(tx => this.txIds.push(tx.id))
+  public createTransaction(inputs) {
+    const asset = {yourAsset: inputs.value.data};
+    const metadata = {yourMeta: inputs.value.metadata};
+    this.bdbService.createNewAsset(this.keypair, asset, metadata).then(tx => this.tx = tx);
   }
 }

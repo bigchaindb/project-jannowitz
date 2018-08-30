@@ -1,18 +1,43 @@
 <div class="dashContent">
 
-  <h3>Angular 5 app template for BigchainDB apps!</h3>
+  <h2>Angular 6 app template for BigchainDB apps!</h2>
 
+  <br/>
 
-  <p>
-    Reference implementation:
-    <a href="https://github.com/ascribe/vehicle-registry/tree/master/src/client">RTA PoC</a>
-  </p>
-
-  <div style="margin-top: 20px">
-    <button (click)="createTransaction()">Create some transactions!</button>
+  <div>
+    This is basic template where you can create first transaction on BigchainDB with custom values provided below.
   </div>
-  <br/><br/>
-  <div *ngFor="let id of txIds">
-    {{id}}
+
+  <br/>
+
+  <div>
+    <form (ngSubmit)="createTransaction(inputs)" #inputs="ngForm">
+        <div>
+            Asset data: <input type="text" [(ngModel)]="data" name="data" placeholder="Asset data">
+        </div>
+        <div>
+            Metadata: <input type="text" [(ngModel)]="metadata" name="metadata" placeholder="Metadata">
+        </div>
+        <div>
+          <button>Create transaction</button>
+        </div>
+    </form>
   </div>
+
+  <br/>
+
+  <div *ngIf="tx !== undefined">
+    This is transaction submited to BigchainDB
+  </div>
+
+  <div class="codeblock" *ngIf="tx !== undefined">
+    <code>
+      <pre>{{ tx | json:4 }}</pre>
+    </code>
+  </div>
+
+  <br/>
+
+  <div>Want to know more visit: <a href="https://github.com/bigchaindb/BEPs/tree/master/13">Transaciton model docs</a></div>
+
 </div>

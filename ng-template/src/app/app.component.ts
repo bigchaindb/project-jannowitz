@@ -1,19 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { ConfigService } from './shared/config.service'
+import { Component } from '@angular/core';
+import { ConfigService } from './shared/config.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-
-export class AppComponent implements OnInit {
+export class AppComponent {
   constructor(private configService: ConfigService) { }
 
   // load configuration on init
-  ngOnInit(): void {
+  OnInit(): void {
     this.configService.getConfiguration().then(config => {
-      localStorage.setItem('config', JSON.stringify(config))
-    })
+      localStorage.setItem('config', JSON.stringify(config));
+    });
   }
 }
