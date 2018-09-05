@@ -1,10 +1,10 @@
 # Query Multiple Nodes 
 
-## Function
+## Overview
 
 This example shows how to query multiple nodes in a BigchainDB network for a particular asset. Based on the response from all the nodes, the final confidence level of the network is calculated. The response is returned with the data and the confidence level. This is primarily helpful when the end-users are not directly hosting their own node but are querying remote nodes in a network. With this approach, they can query multiple remote nodes.
 
-## Components
+## Main components and modules
 
 #### bdb-active-nodes.json
 
