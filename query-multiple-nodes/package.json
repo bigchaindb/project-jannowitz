@@ -1,13 +1,13 @@
 {
-  "name": "playground",
+  "name": "query-multiple-nodes-example",
   "version": "1.0.0",
-  "description": "",
+  "description": "This example shows how to query multiple nodes in a BigchainDB network for a particular asset.",
   "main": "index.js",
   "scripts": {
     "build": "babel ./src -d ./dist -s",
     "test": "npm run build && mocha queryNodes.test.js"
   },
-  "author": "",
+  "author": "dev@bigchaindb.com",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.26.0",
