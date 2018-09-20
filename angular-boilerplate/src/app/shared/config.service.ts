@@ -1,16 +1,17 @@
-import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
-
+import { HttpClient } from '@angular/common/http'
 @Injectable()
 export class ConfigService {
 
-  private static ConfigFilePath = 'assets/app.config.json';
-
-  constructor(private http: Http) { }
+  configFile = "assets/app.config.json";
+  config
+  
+  constructor(private http: HttpClient) { 
+    this.http.get(this.configFile).subscribe( result => this.config = result);
+  }
 
   // Gets the app configuration from the config.json file
-  async getConfiguration() {
-    const config = await this.http.get(ConfigService.ConfigFilePath);
-    return config;
+  getConfiguration() {
+    return this.config;
   }
 }

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ConfigService } from './shared/config.service';
 
 @Component({
   selector: 'app-root',
@@ -7,12 +6,4 @@ import { ConfigService } from './shared/config.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private configService: ConfigService) { }
-
-  // load configuration on init
-  OnInit(): void {
-    this.configService.getConfiguration().then(config => {
-      localStorage.setItem('config', JSON.stringify(config));
-    });
-  }
 }

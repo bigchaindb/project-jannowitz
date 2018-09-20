@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import * as driver from 'bigchaindb-driver';
-
 import { ConfigService } from './config.service';
 
 @Injectable()
 export class BdbService {
-
+  constructor(private configService: ConfigService){}
   // connection object
   private conn;
 
@@ -168,7 +167,7 @@ export class BdbService {
   // private: creates a connection to BDB server
   private async _getConnection() {
     if (!this.conn) {
-      const config = JSON.parse(localStorage.getItem('config'));
+      const config = this.configService.getConfiguration();
       this.conn = new driver.Connection(config.bdb.apiUrl);
     }
   }
