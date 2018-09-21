@@ -22,7 +22,7 @@ bdb = BigchainDB(bdb_root_url)
 car_asset = {
     'data': {
         'car': 
-            'serial_number3',
+            'serial_number',
     },
 }
 

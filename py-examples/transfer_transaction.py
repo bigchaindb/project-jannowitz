@@ -67,19 +67,6 @@ sent_creation_tx2 = bdb.transactions.send(tx_signed2)
 txid = tx_signed1['id']
 txid2 = tx_signed2['id']
 
-trials = 0
-while trials < 60:
-    try:
-        if bdb.transactions.status(txid).get('status') == 'valid' and (bdb.transactions.status(txid2).get('status') == 'valid') :
-            print('Tx Create valid in:', trials, 'secs')
-            break
-    except bigchaindb_driver.exceptions.NotFoundError:
-        trials += 1
-        sleep(1)
-
-if trials == 60:
-    print('Tx is still being processed... Bye!')
-    exit(0)
 
 asset_id = txid
 asset_id2 = txid2
@@ -125,19 +112,6 @@ fulfilled_transfer_tx = bdb.transactions.fulfill(
 print('Preoared transfer', prepared_transfer_tx)
 
 sent_transfer_tx = bdb.transactions.send(fulfilled_transfer_tx)
-
-
-
-trials = 0
-while trials < 60:
-    try:
-        if bdb.transactions.status(sent_transfer_tx['id']).get('status') == 'valid':
-            print('Tx Transfer valid in:', trials, 'secs')
-            break
-    except bigchaindb_driver.exceptions.NotFoundError:
-        trials += 1
-        sleep(1)
-
 
 
 print('Public KeyBOB: ',bob.public_key)
